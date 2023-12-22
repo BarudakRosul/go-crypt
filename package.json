@@ -1,0 +1,35 @@
+{
+  "name": "gcrypt",
+  "version": "1.0.0",
+  "description": "A Node.js CLI tool and library simple encryption and decryption tool using PBKDF2, zlib, and AES-256-GCM",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "bin": {
+    "gcrypt": "bin/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BarudakRosul/go-crypt.git"
+  },
+  "keywords": [
+    "encrypt",
+    "decrypt",
+    "compress",
+    "decompress",
+    "cryptography"
+  ],
+  "author": "BarudakRosul",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/BarudakRosul/go-crypt/issues"
+  },
+  "homepage": "https://github.com/BarudakRosul/go-crypt#readme",
+  "dependencies": {
+    "commander": "^11.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0"
+  }
+}
