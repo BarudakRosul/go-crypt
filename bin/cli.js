@@ -15,7 +15,6 @@ program
   .description("Encryption file or data stdin")
   .option("-f, --file <file>", "Specify input path file for encrypt")
   .option("-p, --passkey <passkey>", "Specify passphrase key")
-  .option("-v, --verbose", "Enable verbose mode")
   .action((options) => {
     const { file, passkey, verbose } = options;
 
@@ -37,13 +36,6 @@ program
       const outputFile = file + ".enc";
       fs.unlinkSync(file);
       fs.writeFileSync(outputFile, encrypted);
-      // Verbose mode
-      if (verbose) {
-        const bufferSize = Buffer.allocUnsafe(1024 * 1024);
-        console.log(`Buffer size   : ${bufferSize.length}`);
-        console.log(`Bytes read    : ${plaintext.length}`);
-        console.log(`Bytes written : ${encrypted.length}`);
-      }
       console.log(`Encryption completed. Result saved to ${outputFile}`);
     } else {
       // If file is not specified, read input from stdin
@@ -60,14 +52,6 @@ program
         // Encrypt text
         const encrypted = encrypt(inputText, passkey);
 
-        // Verbose mode
-        if (verbose) {
-          const bufferSize = Buffer.allocUnsafe(1024 * 1024);
-          console.log(`Buffer size   : ${bufferSize.length}`);
-          console.log(`Bytes read    : ${inputText.length}`);
-          console.log(`Bytes written : ${encrypted.length}`);
-        }
-
         // Print encrypted result to stdout
         process.stdout.write(encrypted);
       });
@@ -79,7 +63,6 @@ program
   .description("Decryption file or data stdin")
   .option("-f, --file <file>", "Specify path file for decrypt")
   .option("-p, --passkey <passkey>", "Specify passphrase key")
-  .option("-v, --verbose", "Enable verbose mode")
   .action((options) => {
     const { file, passkey, verbose } = options;
 
@@ -101,12 +84,6 @@ program
       const outputFile = file.replace(".enc", "");
       fs.unlinkSync(file);
       fs.writeFileSync(outputFile, decrypted);
-      // Verbose mode
-      if (verbose) {
-        console.log(`Buffer size   : ${encryptedData.length}`);
-        console.log(`Bytes read    : ${encryptedData.length}`);
-        console.log(`Bytes written : ${decrypted.length}`);
-      }
       console.log(`Decryption completed. Result saved to ${outputFile}`);
     } else {
       // If file is not specified, read input from stdin
@@ -121,13 +98,6 @@ program
       process.stdin.on("end", () => {
         // Decrypt text
         const decrypted = decrypt(inputText, passkey);
-
-        // Verbose mode
-        if (verbose) {
-          console.log(`Buffer size   : ${inputText.length}`);
-          console.log(`Bytes read    : ${inputText.length}`);
-          console.log(`Bytes written : ${decrypted.length}`);
-        }
 
         // Print decrypted result to stdout
         process.stdout.write(decrypted);
