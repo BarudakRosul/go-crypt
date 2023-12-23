@@ -1,5 +1,5 @@
 {
-  "name": "gcrypt",
+  "name": "@barudakrosul/gcrypt",
   "version": "1.0.0",
   "description": "A Node.js CLI tool and library simple encryption and decryption tool using PBKDF2, zlib, and AES-256-GCM",
   "main": "index.js",
@@ -35,5 +35,10 @@
   },
   "devDependencies": {
     "mocha": "^10.2.0"
+  },
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
   }
 }
