@@ -57,7 +57,7 @@ Untuk memulai menggunakan Go-crypt, ikuti langkah-langkah ini:
 
 - Librari Node.js
   ```javascript
-  const { encrypt, decrypt } = require("gcrypt");
+  const { encrypt, decrypt } = require("@barudakrosul/gcrypt");
 
   const text = "Secret text message!";
   cobst pass = "SecretPasswordKey";
