@@ -114,6 +114,10 @@ Perintah atau opsi yang didukung:
     <td>Masukkan password yang kuat untuk enkripsi atau password yang spesifik untuk dekripsi.</td>
   </tr>
   <tr>
+    <td><code>-c</code> atau <code>--stdout</code></td>
+    <td>Menampilkan hasil enkripsi atau dekripsi file ke terminal.</td>
+  </tr>
+  <tr>
     <td><code>enc</code></td>
     <td>Opsi untuk mulai mengenkripsi.</td>
   </tr>

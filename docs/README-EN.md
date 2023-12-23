@@ -114,6 +114,10 @@ Supported commands or options:
     <td>Enter a strong password for encryption or a specific password for decryption.</td>
   </tr>
   <tr>
+    <td><code>-c</code> atau <code>--stdout</code></td>
+    <td>Display the result of file encryption or decryption to terminal.</td>
+  </tr>
+  <tr>
     <td><code>enc</code></td>
     <td>Option to start encrypting.</td>
   </tr>
