@@ -15,8 +15,9 @@ program
   .description("Encryption file or data stdin")
   .option("-f, --file <file>", "Specify input path file for encrypt")
   .option("-p, --passkey <passkey>", "Specify passphrase key")
+  .option("-c, --stdout", "Written output data to terminal")
   .action((options) => {
-    const { file, passkey, verbose } = options;
+    const { file, passkey, stdout } = options;
 
     // Check if both passkey are provided
     if (!passkey) {
@@ -32,11 +33,16 @@ program
       // Encrypt text
       const encrypted = encrypt(plaintext, passkey);
 
-      // Save encrypted result to file
-      const outputFile = file + ".enc";
-      fs.unlinkSync(file);
-      fs.writeFileSync(outputFile, encrypted);
-      console.log(`Encryption completed. Result saved to ${outputFile}`);
+      if (stdout) {
+        // Print encrypted result to stdout
+        process.stdout.write(encrypted);
+      } else {
+        // Save encrypted result to file
+        const outputFile = file + ".enc";
+        fs.unlinkSync(file);
+        fs.writeFileSync(outputFile, encrypted);
+        console.log(`Encryption completed. Result saved to ${outputFile}`);
+      }
     } else {
       // If file is not specified, read input from stdin
       let inputText = "";
@@ -63,8 +69,9 @@ program
   .description("Decryption file or data stdin")
   .option("-f, --file <file>", "Specify path file for decrypt")
   .option("-p, --passkey <passkey>", "Specify passphrase key")
+  .option("-c, --stdout", "Written output data to terminal")
   .action((options) => {
-    const { file, passkey, verbose } = options;
+    const { file, passkey, stdout } = options;
 
     // Check if both passkey are provided
     if (!passkey) {
@@ -80,11 +87,16 @@ program
       // Decrypt text
       const decrypted = decrypt(encryptedData, passkey);
 
-      // Save decrypted result to file
-      const outputFile = file.replace(".enc", "");
-      fs.unlinkSync(file);
-      fs.writeFileSync(outputFile, decrypted);
-      console.log(`Decryption completed. Result saved to ${outputFile}`);
+      if (stdout) {
+        // Print decrypted result to stdout
+        process.stdout.write(decrypted);
+      } else {
+        // Save decrypted result to file
+        const outputFile = file.replace(".enc", "");
+        fs.unlinkSync(file);
+        fs.writeFileSync(outputFile, decrypted);
+        console.log(`Decryption completed. Result saved to ${outputFile}`);
+      }
     } else {
       // If file is not specified, read input from stdin
       let inputText = Buffer.alloc(0);
