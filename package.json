@@ -20,6 +20,10 @@
     "decompress",
     "cryptography"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "author": "BarudakRosul",
   "license": "AGPL-3.0",
   "bugs": {
