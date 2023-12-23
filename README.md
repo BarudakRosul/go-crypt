@@ -4,7 +4,7 @@
   <p><a href="/docs/README-EN.md">English</a></p>
   <p><a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml">Laporkan Bug</a> · <a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.yml">Ajukan Fitur</a></p>
   <p>
-    <a href="https://npmjs.org/gcrypt"><img src="https://img.shields.io/npm/v/gcrypt" alt="NPM Version"/></a>
+    <a href="https://www.npmjs.com/package/@barudakrosul/gcrypt"><img src="https://img.shields.io/npm/v/@barudakrosul/gcrypt" alt="NPM Version"/></a>
     <a href="/LICENSE"><img src="https://img.shields.io/github/license/BarudakRosul/go-crypt" alt="License"/></a>
     <a href="https://github.com/BarudakRosul/go-crypt/stargazers"><img src="https://img.shields.io/github/stars/BarudakRosul/go-crypt" alt="Stars"/></a>
     <a href="https://github.com/BarudakRosul/go-crypt/network/members"><img src="https://img.shields.io/github/forks/BarudakRosul/go-crypt" alt="Forks"/></a>
