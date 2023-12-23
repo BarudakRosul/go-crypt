@@ -42,13 +42,13 @@ To install Go-crypt locally, follow these installation steps:
 - Node.js Library:
 
    ```shell
-   npm install gcrypt
+   npm install @barudakrosul/gcrypt
    ```
 
 - CLI Command:
 
    ```shell
-   npm -g install gcrypt
+   npm -g install @barudakrosul/gcrypt
    ```
 
 ## Usage
