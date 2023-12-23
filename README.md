@@ -60,12 +60,12 @@ Untuk memulai menggunakan Go-crypt, ikuti langkah-langkah ini:
   const { encrypt, decrypt } = require("@barudakrosul/gcrypt");
 
   const text = "Secret text message!";
-  cobst pass = "SecretPasswordKey";
+  const pass = "SecretPasswordKey";
 
   // Encrypted text
   const encrypted = encrypt(text, pass);
 
-  console.log(encrypted.toString("utf-8");
+  console.log(encrypted.toString("utf-8"));
 
   // Decrypted text
   const decrypted = decrypt(encrypted, pass);

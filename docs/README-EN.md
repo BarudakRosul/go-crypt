@@ -65,7 +65,7 @@ To start using Go-crypt, follow these steps:
   // Encrypted text
   const encrypted = encrypt(text, pass);
 
-  console.log(encrypted.toString("utf-8");
+  console.log(encrypted.toString("utf-8"));
 
   // Decrypted text
   const decrypted = decrypt(encrypted, pass);
