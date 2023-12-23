@@ -90,6 +90,39 @@ Untuk memulai menggunakan Go-crypt, ikuti langkah-langkah ini:
     echo "Text encrypted!" | gcrypt dec -p SecretPassKey
     ```
 
+Perintah atau opsi yang didukung:
+
+<table>
+  <tr>
+    <td><p align="center"><b>Perintah atau Opsi</b></p></td>
+    <td><p align="center"><b>Keterangan</b></p></td>
+  </tr>
+  <tr>
+    <td><code>-h</code>, <code>--help</code>, atau <code>help</code></td>
+    <td>Menampilkan bantuan untuk alat ini.</td>
+  </tr>
+  <tr>
+    <td><code>-V</code> atau <code>--version</code></td>
+    <td>Menampilkan versi alat ini.</td>
+  </tr>
+  <tr>
+    <td><code>-f</code> atau <code>--file</code></td>
+    <td>Menggunakan file untuk mulai mengenkripsi atau mendekripsi.</td>
+  </tr>
+  <tr>
+    <td><code>-p</code> atau <code>--passkey</code></td>
+    <td>Masukkan password yang kuat untuk enkripsi atau password yang spesifik untuk dekripsi.</td>
+  </tr>
+  <tr>
+    <td><code>enc</code></td>
+    <td>Opsi untuk mulai mengenkripsi.</td>
+  </tr>
+  <tr>
+    <td><code>dec</code></td>
+    <td>Opsi untuk mulai mendekripsi.</td>
+  </tr>
+</table>
+
 ## Berkontribusi
 
 Kontribusi pada Go-crypt sangat dihargai! Baik melaporkan bug, menyarankan fitur baru, atau berkontribusi pada perbaikan kode.

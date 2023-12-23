@@ -90,6 +90,39 @@ To start using Go-crypt, follow these steps:
     echo "Text encrypted!" | gcrypt dec -p SecretPassKey
     ```
 
+Supported commands or options:
+
+<table>
+  <tr>
+    <td><p align="center"><b>Commands or Options</b></p></td>
+    <td><p align="center"><b>Description</b></p></td>
+  </tr>
+  <tr>
+    <td><code>-h</code>, <code>--help</code>, or <code>help</code></td>
+    <td>Display help for this tool.</td>
+  </tr>
+  <tr>
+    <td><code>-V</code> or <code>--version</code></td>
+    <td>Display the version of this tool.</td>
+  </tr>
+  <tr>
+    <td><code>-f</code> or <code>--file</code></td>
+    <td>Use a file to start encrypting or decrypting.</td>
+  </tr>
+  <tr>
+    <td><code>-p</code> or <code>--passkey</code></td>
+    <td>Enter a strong password for encryption or a specific password for decryption.</td>
+  </tr>
+  <tr>
+    <td><code>enc</code></td>
+    <td>Option to start encrypting.</td>
+  </tr>
+  <tr>
+    <td><code>dec</code></td>
+    <td>Option to start decrypting.</td>
+  </tr>
+</table>
+
 ## Contribution
 
 Contributions to Go-crypt are highly appreciated! Whether reporting bugs, suggesting new features, or contributing to code improvements.
