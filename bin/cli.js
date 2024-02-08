@@ -127,7 +127,7 @@ try {
       }
     })
     .on("--help", () => {
-      console.log(`\nThis tool licensed under ${packageJson.license} License, see <${packageJson.homepage.replace("#readme", "")}/tree/master/LICENSE>`)
+      console.log(`\nThis tool licensed under ${packageJson.license} License, see <${packageJson.homepage.replace("#readme", "/tree/master/LICENSE")}>`)
       console.log(`Report any bugs to <${packageJson.bugs.url}>`);
       console.log(`Full documentation <${packageJson.homepage}>`);
     })
