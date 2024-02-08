@@ -18,15 +18,3 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
     actions:
       queue:
-  - name: Automatic approve for GitHub Actions pull requests
-    conditions:
-      - author = github-actions[bot]
-    actions:
-      review:
-        type: APPROVE
-  - name: Automatic merge for GitHub Actions pull requests
-    conditions:
-      - author = github-actions[bot]
-      - "#approved-reviews-by>=1"
-    actions:
-      merge:
