@@ -14,11 +14,12 @@ try {
     .version(`Go-crypt v${packageJson.version}`)
     .description("Go-crypt is simple encryption and decryption using PBKDF2, zlib, and AES-256-GCM.")
     .option("-f, --file <file_name>", "input file name for encryption or decryption")
+    .option("-o, --output <out_name>", "save result to out name")
     .option("-d, --decrypt", "starting decryption")
     .option("-p, --passkey <pass>", "enter passphrase key (default: '1235678')")
     .option("-c, --stdout", "write output to terminal")
     .action((options) => {
-      let { file, decrypt, passkey, stdout } = options;
+      let { file, output, decrypt, passkey, stdout } = options;
 
       if (! passkey) {
         passkey = "12345678";
@@ -33,9 +34,11 @@ try {
             process.stdout.write(decrypted);
             process.exit(0);
           } else {
-            const output = file.replace(".enc", "");
-            fs.writeFileSync(output, decrypted);
+            if (! output) {
+              output = file.replace(".enc", "");
+            }
             fs.unlinkSync(file);
+            fs.writeFileSync(output, decrypted);
             printf(`${__program}: decryption successfully`);
             printf(`File saved as '${output}'`);
             process.exit(0);
@@ -62,8 +65,16 @@ try {
             }
 
             const decrypted = gcrypt.decrypt(inputText, passkey);
-            process.stdout.write(decrypted);
-            process.exit(0);
+
+            if (! output) {
+              process.stdout.write(decrypted);
+              process.exit(0);
+            } else {
+              fs.writeFileSync(output, decrypted);
+              printf(`${__program}: decryption successfully`);
+              printf(`File saved as '${output}'`);
+              process.exit(0);
+            }
           });
         }
       } else {
@@ -75,9 +86,11 @@ try {
             process.stdout.write(encrypted);
             process.exit(0);
           } else {
-            const output = file + ".enc";
-            fs.writeFileSync(output, encrypted);
+            if (! output) {
+              output = file + ".enc";
+            }
             fs.unlinkSync(file);
+            fs.writeFileSync(output, encrypted);
             printf(`${__program}: encryption successfully`);
             printf(`File saved as '${output}'`);
             process.exit(0);
@@ -99,8 +112,16 @@ try {
             }
 
             const encrypted = gcrypt.encrypt(inputText, passkey);
-            process.stdout.write(encrypted);
-            process.exit(0);
+
+            if (! output) {
+              process.stdout.write(encrypted);
+              process.exit(0);
+            } else {
+              fs.writeFileSync(output, encrypted);
+              printf(`${__program}: encryption successfully`);
+              printf(`File saved as '${output}'`);
+              process.exit(0);
+            }
           });
         }
       }
