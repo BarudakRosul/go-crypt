@@ -1,120 +1,118 @@
-#!/usr/bin/env node
+#!/bin/node
 const fs = require("fs");
 const path = require("path");
 const { program } = require("commander");
-const { encrypt, decrypt } = require("../index");
+const gcrypt = require("../index");
+const printf = require("../lib/printf");
 const packageJsonPath = path.join(__dirname, "../package.json");
 const packageJson = require(packageJsonPath);
 
-program
-  .version(`Go-crypt v${packageJson.version}`)
-  .description("Go-crypt is simple encryption and decryption using PBKDF2, zlib, and AES-256-GCM.");
+const __program = String(process.argv.slice(1,2)).replace(/.+\//g, "");
 
-program
-  .command("enc")
-  .description("Encryption file or data stdin")
-  .option("-f, --file <file>", "Specify input path file for encrypt")
-  .option("-p, --passkey <passkey>", "Specify passphrase key")
-  .option("-c, --stdout", "Written output data to terminal")
-  .action((options) => {
-    const { file, passkey, stdout } = options;
+try {
+  program
+    .version(`Go-crypt v${packageJson.version}`)
+    .description("Go-crypt is simple encryption and decryption using PBKDF2, zlib, and AES-256-GCM.")
+    .option("-f, --file <file_name>", "input file name for encryption or decryption")
+    .option("-d, --decrypt", "starting decryption")
+    .option("-p, --passkey <pass>", "enter passphrase key (default: '1235678')")
+    .option("-c, --stdout", "write output to terminal")
+    .action((options) => {
+      let { file, decrypt, passkey, stdout } = options;
 
-    // Check if both passkey are provided
-    if (!passkey) {
-      console.error("Both -p or --passkey option are required.");
-      process.exit(1);
-    }
-
-    // Check if file option is specified
-    if (file) {
-      // If file is specified, read file content
-      const plaintext = fs.readFileSync(file, "utf-8");
-
-      // Encrypt text
-      const encrypted = encrypt(plaintext, passkey);
-
-      if (stdout) {
-        // Print encrypted result to stdout
-        process.stdout.write(encrypted);
-      } else {
-        // Save encrypted result to file
-        const outputFile = file + ".enc";
-        fs.unlinkSync(file);
-        fs.writeFileSync(outputFile, encrypted);
-        console.log(`Encryption completed. Result saved to ${outputFile}`);
+      if (! passkey) {
+        passkey = "12345678";
       }
-    } else {
-      // If file is not specified, read input from stdin
-      let inputText = "";
-      process.stdin.setEncoding("utf-8");
-      process.stdin.on("readable", () => {
-        const chunk = process.stdin.read();
-        if (chunk !== null) {
-          inputText += chunk;
+
+      if (decrypt) {
+        if (file) {
+          const data = fs.readFileSync(file);
+          const decrypted = gcrypt.decrypt(data, passkey);
+
+          if (stdout) {
+            process.stdout.write(decrypted);
+            process.exit(0);
+          } else {
+            const output = file.replace(".enc", "");
+            fs.writeFileSync(output, decrypted);
+            fs.unlinkSync(file);
+            printf(`${__program}: decryption successfully`);
+            printf(`File saved as '${output}'`);
+            process.exit(0);
+          }
+        } else {
+          let inputText = "";
+          process.stdin.on("readable", () => {
+            const chunk = process.stdin.read();
+            if (chunk !== null) {
+              inputText = chunk;
+            }
+          });
+
+          process.stdin.on("end", () => {
+            if (inputText === null || inputText === "") {
+              printf(`${__program}: missing operand`);
+              printf(`Try '${__program} --help' for more information`);
+              process.exit(1);
+            }
+
+            if (String(inputText).search("<Buffer")) {
+              const buffer = Buffer.alloc(0);
+              inputText = Buffer.concat([buffer, inputText]);
+            }
+
+            const decrypted = gcrypt.decrypt(inputText, passkey);
+            process.stdout.write(decrypted);
+            process.exit(0);
+          });
         }
-      });
-
-      process.stdin.on("end", () => {
-        // Encrypt text
-        const encrypted = encrypt(inputText, passkey);
-
-        // Print encrypted result to stdout
-        process.stdout.write(encrypted);
-      });
-    }
-  });
-
-program
-  .command("dec")
-  .description("Decryption file or data stdin")
-  .option("-f, --file <file>", "Specify path file for decrypt")
-  .option("-p, --passkey <passkey>", "Specify passphrase key")
-  .option("-c, --stdout", "Written output data to terminal")
-  .action((options) => {
-    const { file, passkey, stdout } = options;
-
-    // Check if both passkey are provided
-    if (!passkey) {
-      console.error("Both -p or --passkey option are required.");
-      process.exit(1);
-    }
-
-    // Check if file option is specified
-    if (file) {
-      // If file is specified, read file content
-      const encryptedData = fs.readFileSync(file);
-
-      // Decrypt text
-      const decrypted = decrypt(encryptedData, passkey);
-
-      if (stdout) {
-        // Print decrypted result to stdout
-        process.stdout.write(decrypted);
       } else {
-        // Save decrypted result to file
-        const outputFile = file.replace(".enc", "");
-        fs.unlinkSync(file);
-        fs.writeFileSync(outputFile, decrypted);
-        console.log(`Decryption completed. Result saved to ${outputFile}`);
-      }
-    } else {
-      // If file is not specified, read input from stdin
-      let inputText = Buffer.alloc(0);
-      process.stdin.on("readable", () => {
-        const chunk = process.stdin.read();
-        if (chunk !== null) {
-          inputText = Buffer.concat([inputText, chunk]);
+        if (file) {
+          const data = fs.readFileSync(file, "utf-8");
+          const encrypted = gcrypt.encrypt(data, passkey);
+
+          if (stdout) {
+            process.stdout.write(encrypted);
+            process.exit(0);
+          } else {
+            const output = file + ".enc";
+            fs.writeFileSync(output, encrypted);
+            fs.unlinkSync(file);
+            printf(`${__program}: encryption successfully`);
+            printf(`File saved as '${output}'`);
+            process.exit(0);
+          }
+        } else {
+          let inputText = "";
+          process.stdin.on("readable", () => {
+            const chunk = process.stdin.read();
+            if (chunk !== null) {
+              inputText = chunk;
+            }
+          });
+
+          process.stdin.on("end", () => {
+            if (inputText === null || inputText === "") {
+              printf(`${__program}: missing operand`);
+              printf(`Try '${__program} --help' for more information`);
+              process.exit(1);
+            }
+
+            const encrypted = gcrypt.encrypt(inputText, passkey);
+            process.stdout.write(encrypted);
+            process.exit(0);
+          });
         }
-      });
-
-      process.stdin.on("end", () => {
-        // Decrypt text
-        const decrypted = decrypt(inputText, passkey);
-
-        // Print decrypted result to stdout
-        process.stdout.write(decrypted);
-      });
-    }
-  });
-
-program.parse(process.argv);
+      }
+    })
+    .on("--help", () => {
+      console.log(`\nThis tool licensed under ${packageJson.license} License, see <${packageJson.homepage.replace("#readme", "")}/tree/master/LICENSE>`)
+      console.log(`Report any bugs to <${packageJson.bugs.url}>`);
+      console.log(`Full documentation <${packageJson.homepage}>`);
+    })
+    .parse(process.argv);
+} catch (error) {
+  printf(`${__program}: ${error.message}`);
+  const errorCode = typeof error.code === "number" ? error.code : 1;
+  process.exit(errorCode);
+}
