@@ -4,7 +4,7 @@
   "description": "A Node.js CLI tool and library simple encryption and decryption tool using PBKDF2, zlib, and AES-256-GCM",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/test.js"
+    "test": "mocha"
   },
   "bin": {
     "gcrypt": "bin/cli.js"
@@ -24,7 +24,7 @@
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
-  "author": "BarudakRosul",
+  "author": "Barudak Rosul",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/BarudakRosul/go-crypt/issues"
@@ -38,7 +38,6 @@
   },
   "directories": {
     "doc": "docs",
-    "lib": "lib",
-    "test": "test"
+    "lib": "lib"
   }
 }
