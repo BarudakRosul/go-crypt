@@ -57,18 +57,18 @@ To start using Go-crypt, follow these steps:
 
 - Node.js Library
   ```javascript
-  const { encrypt, decrypt } = require("@barudakrosul/gcrypt");
+  const gcrypt = require("@barudakrosul/gcrypt");
 
   const text = "Secret text message!";
   const pass = "SecretPasswordKey";
 
   // Encrypted text
-  const encrypted = encrypt(text, pass);
+  const encrypted = gcrypt.encrypt(text, pass);
 
   console.log(encrypted.toString("utf-8"));
 
   // Decrypted text
-  const decrypted = decrypt(encrypted, pass);
+  const decrypted = gcrypt.decrypt(encrypted, pass);
 
   console.log(decrypted);
   ```
