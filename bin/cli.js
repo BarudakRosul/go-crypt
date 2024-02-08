@@ -16,7 +16,7 @@ try {
     .option("-f, --file <file_name>", "input file name for encryption or decryption")
     .option("-o, --output <out_name>", "save result to out name")
     .option("-d, --decrypt", "starting decryption")
-    .option("-p, --passkey <pass>", "enter passphrase key (default: '1235678')")
+    .option("-p, --passkey <pass>", "enter passphrase key (default: '12345678')")
     .option("-c, --stdout", "write output to terminal")
     .action((options) => {
       let { file, output, decrypt, passkey, stdout } = options;
