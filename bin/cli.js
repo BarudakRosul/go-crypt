@@ -2,10 +2,10 @@
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
+const checknet = require("@barudakrosul/internet-available");
 const { program } = require("commander");
 const gcrypt = require("../index");
 const printf = require("../lib/printf");
-const internetAvailable = require("../lib/internet-available");
 const latestVersion = require("../lib/latest-version");
 const packageJsonPath = path.join(__dirname, "../package.json");
 const packageJson = require(packageJsonPath);
@@ -25,15 +25,17 @@ try {
     .action((options) => {
       let { file, output, decrypt, passkey, stdout } = options;
 
-      if (internetAvailable()) {
-        latestVersion(url)
-          .then((version) => {
-            if (version !== undefined && version !== packageJson.version) {
-              printf(`${__program}: new version '${packageJson.version} => ${version}'`);
-              printf(`Try 'npm -g install ${packageJson.name}@${version}' for update this tool`);
-            }
-          });
-      }
+      (async () => {
+        if (await checknet.checkWithAxios()) {
+          latestVersion(url)
+            .then((version) => {
+              if (version !== undefined && version !== packageJson.version) {
+                printf(`${__program}: new version '${packageJson.version} => ${version}'`);
+                printf(`Try 'npm -g install ${packageJson.name}@${version}' for update this tool`);
+              }
+            });
+        }
+      })();
 
       if (! passkey) {
         passkey = "12345678";
