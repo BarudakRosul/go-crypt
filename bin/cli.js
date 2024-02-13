@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const https = require("https");
 const checknet = require("@barudakrosul/internet-available");
+const millify = require("millify");
 const { program } = require("commander");
 const gcrypt = require("../index");
 const printf = require("../lib/printf");
@@ -19,11 +20,12 @@ try {
     .description("Go-crypt is simple encryption and decryption using PBKDF2, zlib, and AES-256-GCM.")
     .option("-f, --file <file_name>", "input file name for encryption or decryption")
     .option("-o, --output <out_name>", "save result to out name")
+    .option("-v, --verbose", "verbose mode")
     .option("-d, --decrypt", "starting decryption")
     .option("-p, --passkey <pass>", "enter passphrase key (default: '12345678')")
     .option("-c, --stdout", "write output to terminal")
     .action((options) => {
-      let { file, output, decrypt, passkey, stdout } = options;
+      let { file, output, verbose, decrypt, passkey, stdout } = options;
 
       (async () => {
         if (await checknet.checkWithAxios()) {
@@ -43,8 +45,26 @@ try {
 
       if (decrypt) {
         if (file) {
+          const firstTimeout = new Date();
           const data = fs.readFileSync(file);
           const decrypted = gcrypt.decrypt(data, passkey);
+          const lastTimeout = new Date();
+          const originalBytes = Buffer.from(data, "utf-8").length;
+          const outputBytes = Buffer.from(decrypted, "utf-8").length;
+          const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
+          let percentDecrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
+
+          if (percentDecrypted < 0) {
+            percentDecrypted += 100;
+          }
+
+          if (verbose) {
+            printf("Buffer size    : 8192");
+            printf(`Original bytes : ${originalBytes} bytes`);
+            printf(`Output bytes   : ${outputBytes} bytes`);
+            printf(`Timeout        : ${timeout} sec`);
+            printf(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%`);
+          }
 
           if (stdout) {
             process.stdout.write(decrypted);
@@ -80,7 +100,25 @@ try {
               inputText = Buffer.concat([buffer, inputText]);
             }
 
+            const firstTimeout = new Date();
             const decrypted = gcrypt.decrypt(inputText, passkey);
+            const lastTimeout = new Date();
+            const originalBytes = Buffer.from(inputText, "utf-8").length;
+            const outputBytes = Buffer.from(decrypted, "utf-8").length;
+            const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
+            let percentDecrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
+
+            if (percentDecrypted < 0) {
+              percentDecrypted += 100;
+            }
+
+            if (verbose) {
+              printf("Buffer size    : 8192");
+              printf(`Original bytes : ${originalBytes} bytes`);
+              printf(`Output bytes   : ${outputBytes} bytes`);
+              printf(`Timeout        : ${timeout} sec`);
+              printf(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%`);
+            }
 
             if (! output) {
               process.stdout.write(decrypted);
@@ -95,8 +133,26 @@ try {
         }
       } else {
         if (file) {
+          const firstTimeout = new Date();
           const data = fs.readFileSync(file, "utf-8");
           const encrypted = gcrypt.encrypt(data, passkey);
+          const lastTimeout = new Date();
+          const originalBytes = Buffer.from(data, "utf-8").length;
+          const outputBytes = Buffer.from(encrypted, "utf-8").length;
+          const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
+          let percentEncrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
+
+          if (percentEncrypted < 0) {
+            percentEncrypted += 100;
+          }
+
+          if (verbose) {
+            printf("Buffer size    : 8192");
+            printf(`Original bytes : ${originalBytes} bytes`);
+            printf(`Output bytes   : ${outputBytes} bytes`);
+            printf(`Timeout        : ${timeout} sec`);
+            printf(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%`);
+          }
 
           if (stdout) {
             process.stdout.write(encrypted);
@@ -127,7 +183,25 @@ try {
               process.exit(1);
             }
 
+            const firstTimeout = new Date();
             const encrypted = gcrypt.encrypt(inputText, passkey);
+            const lastTimeout = new Date();
+            const originalBytes = Buffer.from(inputText, "utf-8").length;
+            const outputBytes = Buffer.from(encrypted, "utf-8").length;
+            const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
+            let percentEncrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
+
+            if (percentEncrypted < 0) {
+              percentEncrypted += 100;
+            }
+
+            if (verbose) {
+              printf("Buffer size    : 8192");
+              printf(`Original bytes : ${originalBytes} bytes`);
+              printf(`Output bytes   : ${outputBytes} bytes`);
+              printf(`Timeout        : ${timeout} sec`);
+              printf(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%`);
+            }
 
             if (! output) {
               process.stdout.write(encrypted);
