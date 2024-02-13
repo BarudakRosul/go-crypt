@@ -107,7 +107,19 @@ Perintah atau opsi yang didukung:
   </tr>
   <tr>
     <td><code>-f</code> atau <code>--file</code></td>
-    <td>Menggunakan file untuk mulai mengenkripsi atau mendekripsi.</td>
+    <td>Masukkan nama file untuk mengenkripsi atau mendekripsi.</td>
+  </tr>
+  <tr>
+    <td><code>-o</code> atau <code>--output</code></td>
+    <td>Menyimpan hasil enkripsi atau dekripsi ke nama output file.</td>
+  </tr>
+  <tr>
+    <td><code>-v</code> atau <code>--verbose</code></td>
+    <td>Mengaktifkan mode verbose.</td>
+  </tr>
+  <tr>
+    <td><code>-d</code> atau <code>--decrypt</code></td>
+    <td>Mulai mendekripsi file atau data input.</td>
   </tr>
   <tr>
     <td><code>-p</code> atau <code>--passkey</code></td>
@@ -116,14 +128,6 @@ Perintah atau opsi yang didukung:
   <tr>
     <td><code>-c</code> atau <code>--stdout</code></td>
     <td>Menampilkan hasil enkripsi atau dekripsi file ke terminal.</td>
-  </tr>
-  <tr>
-    <td><code>enc</code></td>
-    <td>Opsi untuk mulai mengenkripsi.</td>
-  </tr>
-  <tr>
-    <td><code>dec</code></td>
-    <td>Opsi untuk mulai mendekripsi.</td>
   </tr>
 </table>
 
