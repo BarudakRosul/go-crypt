@@ -107,23 +107,27 @@ Supported commands or options:
   </tr>
   <tr>
     <td><code>-f</code> or <code>--file</code></td>
-    <td>Use a file to start encrypting or decrypting.</td>
+    <td>Input the filename for encryption or decryption.</td>
+  </tr>
+  <tr>
+    <td><code>-o</code> or <code>--output</code></td>
+    <td>Save the encryption or decryption result to the specified output file.</td>
+  </tr>
+  <tr>
+    <td><code>-v</code> or <code>--verbose</code></td>
+    <td>Enable verbose mode.</td>
+  </tr>
+  <tr>
+    <td><code>-d</code> or <code>--decrypt</code></td>
+    <td>Start decrypting a file or data input.</td>
   </tr>
   <tr>
     <td><code>-p</code> or <code>--passkey</code></td>
-    <td>Enter a strong password for encryption or a specific password for decryption.</td>
+    <td>Input a strong password for encryption or a specific password for decryption.</td>
   </tr>
   <tr>
-    <td><code>-c</code> atau <code>--stdout</code></td>
-    <td>Display the result of file encryption or decryption to terminal.</td>
-  </tr>
-  <tr>
-    <td><code>enc</code></td>
-    <td>Option to start encrypting.</td>
-  </tr>
-  <tr>
-    <td><code>dec</code></td>
-    <td>Option to start decrypting.</td>
+    <td><code>-c</code> or <code>--stdout</code></td>
+    <td>Display the encryption or decryption result to the terminal.</td>
   </tr>
 </table>
 
