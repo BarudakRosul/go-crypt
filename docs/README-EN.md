@@ -6,8 +6,8 @@
   <p>
     <a href="https://www.npmjs.com/package/@barudakrosul/gcrypt"><img src="https://img.shields.io/npm/v/@barudakrosul/gcrypt" alt="NPM Version"/></a>
     <a href="/LICENSE"><img src="https://img.shields.io/github/license/BarudakRosul/go-crypt" alt="License"/></a>
-    <a href="https://github.com/BarudakRosul/go-crypt/stargazers"><img src="https://img.shields.io/github/stars/BarudakRosul/go-crypt" alt="Stars"/></a>
-    <a href="https://github.com/BarudakRosul/go-crypt/network/members"><img src="https://img.shields.io/github/forks/BarudakRosul/go-crypt" alt="Forks"/></a>
+    <a href="https://github.com/BarudakRosul/go-crypt/stargazers"><img src="https://img.shields.io/github/stars/BarudakRosul/go-crypt?style=flat" alt="Stars"/></a>
+    <a href="https://github.com/BarudakRosul/go-crypt/network/members"><img src="https://img.shields.io/github/forks/BarudakRosul/go-crypt?style=flat" alt="Forks"/></a>
     <a href="https://github.com/BarudakRosul/go-crypt/issues"><img src="https://img.shields.io/github/issues/BarudakRosul/go-crypt" alt="Issues"/></a>
   </p>
 </div>
@@ -56,22 +56,40 @@ To install Go-crypt locally, follow these installation steps:
 To start using Go-crypt, follow these steps:
 
 - Node.js Library
-  ```javascript
-  const gcrypt = require("@barudakrosul/gcrypt");
+  - CommonJS
+    ```javascript
+    const gcrypt = require("@barudakrosul/gcrypt");
 
-  const text = "Secret text message!";
-  const pass = "SecretPasswordKey";
+    const text = "Secret text message!";
+    const pass = "SecretPasswordKey";
 
-  // Encrypted text
-  const encrypted = gcrypt.encrypt(text, pass);
+    // Encrypted text
+    const encrypted = gcrypt.encrypt(text, pass);
 
-  console.log(encrypted.toString("utf-8"));
+    console.log(encrypted.toString("utf-8"));
 
-  // Decrypted text
-  const decrypted = gcrypt.decrypt(encrypted, pass);
+    // Decrypted text
+    const decrypted = gcrypt.decrypt(encrypted, pass);
 
-  console.log(decrypted);
-  ```
+    console.log(decrypted);
+    ```
+  - ECMAScript Module (ESM)
+    ```javascript
+    import gcrypt from "@barudakrosul/gcrypt";
+
+    const text = "Secret text message!";
+    const pass = "SecretPasswordKey";
+
+    // Encrypted text
+    const encrypted = gcrypt.encrypt(text, pass);
+
+    console.log(encrypted.toString("utf-8"));
+
+    // Decrypted text
+    const decrypted = gcrypt.decrypt(encrypted, pass);
+
+    console.log(decrypted);
+    ```
 - CLI Command
   - For encryption:
     ```shell
