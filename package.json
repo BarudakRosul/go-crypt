@@ -32,12 +32,12 @@
   },
   "homepage": "https://github.com/BarudakRosul/go-crypt#readme",
   "dependencies": {
-    "@barudakrosul/internet-available": "^0.1.1",
-    "commander": "^12.0.0",
+    "@barudakrosul/internet-available": "^0.1.4",
+    "commander": "^12.1.0",
     "millify": "^6.1.0"
   },
   "devDependencies": {
-    "mocha": "^10.2.0"
+    "mocha": "^10.6.0"
   },
   "files": [
     "bin/*.js",
