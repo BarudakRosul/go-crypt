@@ -179,8 +179,8 @@ try {
 
             process.stdin.on("end", () => {
               if (inputText === null || inputText === "") {
-                process.stderr.write(`${__program}: missing operand`);
-                process.stderr.write(`Try '${__program} --help' for more information`);
+                process.stderr.write(`${__program}: missing operand\n`);
+                process.stderr.write(`Try '${__program} --help' for more information\n`);
                 process.exit(1);
               }
 
