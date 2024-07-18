@@ -1,23 +1,23 @@
-const { encrypt, Encrypt } = require("./lib/encrypt");
-const { decrypt, Decrypt } = require("./lib/decrypt");
-
-/**
- * Module declaration for the "@barudakrosul/gcrypt" module.
- *
- * @module @barudakrosul/gcrypt
- */
-declare module "@barudakrosul/gcrypt" {
+declare module "gcrypt" {
   /**
-   * Interface representing the gcrypt module.
+   * Encrypts text using PBKDF2, zlib compression, and AES-256-GCM encryption.
+   *
+   * @param {Buffer|string} text - The text to be encrypted.
+   * @param {string} [password] - The passphrase for encryption.
+   * @returns {Buffer} - Encrypted data.
    */
-  interface Gcrypt {
-    encrypt: Encrypt;
-    decrypt: Decrypt;
-    gcrypt: Gcrypt;
-  }
+  function encrypt(text: Buffer | string, password?: string): Buffer;
 
-  const gcrypt: Gcrypt;
+  /**
+   * Decrypts encrypted data using PBKDF2, zlib decompression, and AES-256-GCM decryption.
+   *
+   * @param {Buffer|string} text - The encrypted data text.
+   * @param {string} [password] - The passphrase for decryption.
+   * @returns {Buffer|string} - Decrypted text.
+   */
+  function decrypt(text: Buffer | string, password?: string): Buffer | string;
 
-  export { gcrypt, encrypt, decrypt, Gcrypt, Encrypt, Decrypt };
-  export default gcrypt;
+  export { encrypt, decrypt };
 }
+
+export = gcrypt;

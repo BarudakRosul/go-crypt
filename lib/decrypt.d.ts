@@ -1,18 +1,12 @@
-/**
- * Module declaration for decrypting text.
- *
- * @module decrypt
- */
 declare module "decrypt" {
   /**
-   * Interface representing the decryption function.
+   * Decrypts encrypted data using PBKDF2, zlib decompression, and AES-256-GCM decryption.
+   *
+   * @param {Buffer|string} text - The encrypted data text.
+   * @param {string} [password] - The passphrase for decryption.
+   * @returns {Buffer|string} - Decrypted text.
    */
-  interface Decrypt {
-    (text: Buffer | string, password?: string): Buffer | string;
-  }
+  function decrypt(text: Buffer | string, password?: string): Buffer | string;
 
-  const decrypt: Decrypt;
-
-  export { decrypt, Decrypt };
-  export default decrypt;
+  export = decrypt;
 }

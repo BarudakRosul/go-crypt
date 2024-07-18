@@ -1,18 +1,12 @@
-/**
- * Module declaration for encrypting text.
- *
- * @module encrypt
- */
 declare module "encrypt" {
   /**
-   * Interface representing the encryption function.
+   * Encrypts text using PBKDF2, zlib compression, and AES-256-GCM encryption.
+   *
+   * @param {Buffer|string} text - The text to be encrypted.
+   * @param {string} [password] - The passphrase for encryption.
+   * @returns {Buffer} - Encrypted data.
    */
-  interface Encrypt {
-    (text: Buffer | string, password?: string): Buffer;
-  }
+  function encrypt(text: Buffer | string, password?: string): Buffer;
 
-  const encrypt: Encrypt;
-
-  export { encrypt, Encrypt };
-  export default encrypt;
+  export = encrypt;
 }
