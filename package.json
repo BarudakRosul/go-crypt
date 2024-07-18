@@ -31,6 +31,9 @@
     "url": "https://github.com/BarudakRosul/go-crypt/issues"
   },
   "homepage": "https://github.com/BarudakRosul/go-crypt#readme",
+  "funding": {
+    "url": "https://ko-fi.com/barudakrosul"
+  },
   "dependencies": {
     "@barudakrosul/internet-available": "^0.1.4",
     "commander": "^12.1.0",
