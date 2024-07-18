@@ -1,5 +1,6 @@
 const encrypt = require("./lib/encrypt");
 const decrypt = require("./lib/decrypt");
+const gcrypt = { encrypt, decrypt };
 
-exports = module.exports = { encrypt, decrypt };
-exports.gcrypt = exports;
+module.exports = { encrypt, decrypt };
+module.exports = gcrypt;
