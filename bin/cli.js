@@ -223,7 +223,10 @@ try {
       }
     })
     .on("--help", () => {
-      console.log(`\nThis tool licensed under ${packageJson.license} License, see <${packageJson.homepage.replace("#readme", "/tree/master/LICENSE")}>`)
+      console.log(`\nIf no filename is given, '${__program}' will encrypt or decrypt from`);
+      console.log("standard input to standard output. You can combine short options,");
+      console.log("such as '-v -c' which is the same as '-vc' or '-cv'.\n");
+      console.log(`This tool licensed under ${packageJson.license} License, see <${packageJson.homepage.replace("#readme", "/tree/master/LICENSE")}>`)
       console.log(`Report any bugs to <${packageJson.bugs.url}>`);
       console.log(`Full documentation <${packageJson.homepage}>`);
     })
