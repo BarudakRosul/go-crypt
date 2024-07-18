@@ -6,16 +6,16 @@ const checknet = require("@barudakrosul/internet-available");
 const millify = require("millify");
 const { program } = require("commander");
 const gcrypt = require("../index");
-const printf = require("../lib/printf");
 const latestVersion = require("../lib/latest-version");
 const packageJsonPath = path.join(__dirname, "../package.json");
 const packageJson = require(packageJsonPath);
 
-const __program = String(process.argv.slice(1,2)).replace(/.+\//g, "").replace(/(\.[^.]+)?$/, "");
+const __program = String(process.argv.slice(1, 2)).replace(/.+\//g, "").replace(/(\.[^.]+)?$/, "");
 const url = "https://raw.githubusercontent.com/BarudakRosul/go-crypt/master/package.json";
 
 try {
   program
+    .name(__program)
     .version(`Go-crypt v${packageJson.version}`)
     .description("Go-crypt is simple encryption and decryption using PBKDF2, zlib, and AES-256-GCM.")
     .option("-f, --file <file_name>", "input file name for encryption or decryption")
@@ -59,11 +59,11 @@ try {
           }
 
           if (verbose) {
-            printf("Buffer size    : 8192");
-            printf(`Original bytes : ${originalBytes} bytes`);
-            printf(`Output bytes   : ${outputBytes} bytes`);
-            printf(`Timeout        : ${timeout} sec`);
-            printf(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%`);
+            process.stderr.write("Buffer size    : 8192\n");
+            process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
+            process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
+            process.stderr.write(`Timeout        : ${timeout} sec\n`);
+            process.stderr.write(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%\n`);
           }
 
           if (stdout) {
@@ -75,8 +75,8 @@ try {
             }
             fs.unlinkSync(file);
             fs.writeFileSync(output, decrypted);
-            printf(`${__program}: decryption successfully`);
-            printf(`File saved as '${output}'`);
+            console.log(`${__program}: decryption successfully`);
+            console.log(`File saved as '${output}'`);
             process.exit(0);
           }
         } else {
@@ -90,8 +90,8 @@ try {
 
           process.stdin.on("end", () => {
             if (inputText === null || inputText === "") {
-              printf(`${__program}: missing operand`);
-              printf(`Try '${__program} --help' for more information`);
+              process.stderr.write(`${__program}: missing operand\n`);
+              process.stderr.write(`Try '${__program} --help' for more information\n`);
               process.exit(1);
             }
 
@@ -113,11 +113,11 @@ try {
             }
 
             if (verbose) {
-              printf("Buffer size    : 8192");
-              printf(`Original bytes : ${originalBytes} bytes`);
-              printf(`Output bytes   : ${outputBytes} bytes`);
-              printf(`Timeout        : ${timeout} sec`);
-              printf(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%`);
+              process.stderr.write("Buffer size    : 8192\n");
+              process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
+              process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
+              process.stderr.write(`Timeout        : ${timeout} sec\n`);
+              process.stderr.write(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%\n`);
             }
 
             if (! output) {
@@ -125,8 +125,8 @@ try {
               process.exit(0);
             } else {
               fs.writeFileSync(output, decrypted);
-              printf(`${__program}: decryption successfully`);
-              printf(`File saved as '${output}'`);
+              console.log(`${__program}: decryption successfully`);
+              console.log(`File saved as '${output}'`);
               process.exit(0);
             }
           });
@@ -147,11 +147,11 @@ try {
           }
 
           if (verbose) {
-            printf("Buffer size    : 8192");
-            printf(`Original bytes : ${originalBytes} bytes`);
-            printf(`Output bytes   : ${outputBytes} bytes`);
-            printf(`Timeout        : ${timeout} sec`);
-            printf(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%`);
+            process.stderr.write("Buffer size    : 8192\n");
+            process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
+            process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
+            process.stderr.write(`Timeout        : ${timeout} sec\n`);
+            process.stderr.write(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%\n`);
           }
 
           if (stdout) {
@@ -163,8 +163,8 @@ try {
             }
             fs.unlinkSync(file);
             fs.writeFileSync(output, encrypted);
-            printf(`${__program}: encryption successfully`);
-            printf(`File saved as '${output}'`);
+            console.log(`${__program}: encryption successfully`);
+            console.log(`File saved as '${output}'`);
             process.exit(0);
           }
         } else {
@@ -178,8 +178,8 @@ try {
 
           process.stdin.on("end", () => {
             if (inputText === null || inputText === "") {
-              printf(`${__program}: missing operand`);
-              printf(`Try '${__program} --help' for more information`);
+              process.stderr.write(`${__program}: missing operand`);
+              process.stderr.write(`Try '${__program} --help' for more information`);
               process.exit(1);
             }
 
@@ -196,11 +196,11 @@ try {
             }
 
             if (verbose) {
-              printf("Buffer size    : 8192");
-              printf(`Original bytes : ${originalBytes} bytes`);
-              printf(`Output bytes   : ${outputBytes} bytes`);
-              printf(`Timeout        : ${timeout} sec`);
-              printf(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%`);
+              process.stderr.write("Buffer size    : 8192\n");
+              process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
+              process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
+              process.stderr.write(`Timeout        : ${timeout} sec\n`);
+              process.stderr.write(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%\n`);
             }
 
             if (! output) {
@@ -208,8 +208,8 @@ try {
               process.exit(0);
             } else {
               fs.writeFileSync(output, encrypted);
-              printf(`${__program}: encryption successfully`);
-              printf(`File saved as '${output}'`);
+              console.log(`${__program}: encryption successfully`);
+              console.log(`File saved as '${output}'`);
               process.exit(0);
             }
           });
@@ -223,7 +223,7 @@ try {
     })
     .parse(process.argv);
 } catch (error) {
-  printf(`${__program}: ${error.message}`);
+  process.stderr.write(`${__program}: ${error.message}\n`);
   const errorCode = typeof error.code === "number" ? error.code : 1;
   process.exit(errorCode);
 }
