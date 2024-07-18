@@ -1,6 +1,6 @@
 const fs = require("fs");
 const assert = require("assert");
-const { encrypt, decrypt } = require("../index");
+const { encrypt, decrypt } = require("./index");
 
 describe("Encryption and Decryption", function () {
   const passphrase = "testPassphrase";
