@@ -4,9 +4,10 @@ const path = require("path");
 const https = require("https");
 const checknet = require("@barudakrosul/internet-available");
 const millify = require("millify");
+const semver = require("semver");
 const { program } = require("commander");
 const gcrypt = require("../index");
-const latestVersion = require("../lib/latest-version");
+const getPackageVersion = require("../lib/get-version");
 const packageJsonPath = path.join(__dirname, "../package.json");
 const packageJson = require(packageJsonPath);
 
@@ -14,6 +15,17 @@ const __program = String(process.argv.slice(1, 2)).replace(/.+\//g, "").replace(
 const url = "https://raw.githubusercontent.com/BarudakRosul/go-crypt/master/package.json";
 
 try {
+  (async () => {
+    if (await checknet.checkWithAxios()) {
+      const version = await getPackageVersion(url);
+
+      if (semver.gt(version, packageJson.version)) {
+        console.log(`${__program}: found new version 'v${version}'`);
+        console.log(`Try 'npm install -g ${packageJson.name}@v${version}' to start updating.`);
+      }
+    }
+  })();
+
   program
     .name(__program)
     .version(`Go-crypt v${packageJson.version}`)
@@ -26,18 +38,6 @@ try {
     .option("-c, --stdout", "write output to terminal")
     .action((options) => {
       let { file, output, verbose, decrypt, passkey, stdout } = options;
-
-      (async () => {
-        if (await checknet.checkWithAxios()) {
-          latestVersion(url)
-            .then((version) => {
-              if (version !== undefined && version !== packageJson.version) {
-                printf(`${__program}: new version '${packageJson.version} => ${version}'`);
-                printf(`Try 'npm -g install ${packageJson.name}@${version}' for update this tool`);
-              }
-            });
-        }
-      })();
 
       if (! passkey) {
         passkey = "12345678";
