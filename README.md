@@ -1,15 +1,18 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/BarudakRosul/go-crypt/master/image/logo.svg" alt="Go-crypt Logo" width="260"/>
+  <img src="./image/logo.svg" alt="Go-crypt Logo" width="260"/>
   <h1>Go-crypt</h1>
   <p><a href="/docs/README-EN.md">English</a></p>
   <p><a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml">Laporkan Bug</a> · <a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.yml">Ajukan Fitur</a></p>
   <p>
-    <a href="https://www.npmjs.com/package/@barudakrosul/gcrypt"><img src="https://img.shields.io/npm/v/@barudakrosul/gcrypt" alt="NPM Version"/></a>
+    <a href="https://github.com/BarudakRosul/go-crypt/actions/workflows/test.yml"><img src="https://github.com/BarudakRosul/go-crypt/actions/workflows/test.yml/badge.svg" alt="Testing"/></a>
+    <a href="https://npmjs.com/package/@barudakrosul/gcrypt"><img src="https://img.shields.io/npm/v/%40barudakrosul%2Fgcrypt" alt="NPM Version"/></a>
     <a href="/LICENSE"><img src="https://img.shields.io/github/license/BarudakRosul/go-crypt" alt="License"/></a>
+    <a href="https://npmjs.com/package/@barudakrosul/gcrypt"><img src="https://img.shields.io/npm/d18m/%40barudakrosul%2Fgcrypt" alt="Downloads"/></a>
     <a href="https://github.com/BarudakRosul/go-crypt/stargazers"><img src="https://img.shields.io/github/stars/BarudakRosul/go-crypt?style=flat" alt="Stars"/></a>
     <a href="https://github.com/BarudakRosul/go-crypt/network/members"><img src="https://img.shields.io/github/forks/BarudakRosul/go-crypt?style=flat" alt="Forks"/></a>
     <a href="https://github.com/BarudakRosul/go-crypt/issues"><img src="https://img.shields.io/github/issues/BarudakRosul/go-crypt" alt="Issues"/></a>
   </p>
+  <a href="https://techforpalestine.org/learn-more"><img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg" width="100%" alt="Support Palestine"/></a>
 </div>
 
 ## Daftar Isi
@@ -18,10 +21,12 @@
 2. [Fitur](#fitur)
 3. [Instalasi](#instalasi)
 4. [Penggunaan](#penggunaan)
-5. [Berkontribusi](#berkontribusi)
-6. [Lisensi](#lisensi)
-7. [Penghargaan](#penghargaan)
-8. [Catatan Perubahan](#catatan-perubahan)
+5. [Penggunaan CLI](#penggunaan-cli)
+6. [Berkontribusi](#berkontribusi)
+7. [Lisensi](#lisensi)
+8. [Penghargaan](#penghargaan)
+9. [Donasi](#donasi)
+10. [Catatan Perubahan](#catatan-perubahan)
 
 ## Pendahuluan
 
@@ -31,123 +36,119 @@ Go-crypt adalah alat kriptografi sederhana yang bertujuan menyediakan solusi enk
 
 Go-crypt menawarkan fitur-fitur berikut:
 
-- **Enkripsi Aman**: Memanfaatkan algoritma PBKDF2, zlib, dan AES-256-GCM untuk enkripsi yang kuat dan aman.
-- **Dekripsi yang Aman**: Proses dekripsi yang aman dan dapat diandalkan untuk mengembalikan data ke dalam bentuk semula.
-- **Antarmuka Pengguna Sederhana**: Antarmuka pengguna yang mudah digunakan untuk memfasilitasi proses enkripsi dan dekripsi.
+- Memanfaatkan algoritma PBKDF2, zlib, dan AES-256-GCM untuk enkripsi yang kuat dan aman.
+- Proses dekripsi yang aman dan dapat diandalkan untuk mengembalikan data ke dalam bentuk semula.
+- Dapat diintegrasikan ke dalam kode TypeScript.
+- Menyediakan opsi CLI untuk mengenkripsi atau mendekripsi dari terminal.
 
 ## Instalasi
 
-Untuk menginstal Go-crypt secara lokal, ikuti langkah-langkah instalasi ini:
+Untuk menginstal Go-crypt secara lokal, ikuti langkah instalasi ini:
 
-- Librari Node.js:
+```shell
+npm install @barudakrosul/gcrypt
+```
 
-   ```shell
-   npm install @barudakrosul/gcrypt
-   ```
+Untuk menginstal secara global, gunakan:
 
-- Perintah CLI:
-
-   ```shell
-   npm -g install @barudakrosul/gcrypt
-   ```
+```shell
+npm install -g @barudakrosul/gcrypt
+```
 
 ## Penggunaan
 
-Untuk memulai menggunakan Go-crypt, ikuti langkah-langkah ini:
+Untuk memulai menggunakan Go-crypt, import modulnya terlebih dahulu:
 
-- Librari Node.js
-  - CommonJS
-    ```javascript
-    const gcrypt = require("@barudakrosul/gcrypt");
+**1\. CommonJS**
+```javascript
+const gcrypt = require("@barudakrosul/gcrypt");
+```
 
-    const text = "Secret text message!";
-    const pass = "SecretPasswordKey";
+**2\. ESM (ECMAScript Modules)**
+```javascript
+import gcrypt from "@barudakrosul/gcrypt";
+```
 
-    // Encrypted text
-    const encrypted = gcrypt.encrypt(text, pass);
+**3\. TypeScript**
+```typescript
+import gcrypt from "@barudakrosul/gcrypt";
+```
 
-    console.log(encrypted.toString("utf-8"));
+Contoh penggunaan:
 
-    // Decrypted text
-    const decrypted = gcrypt.decrypt(encrypted, pass);
+```javascript
+const text = "Secret text message!";
+const pass = "SecretPasswordKey";
 
-    console.log(decrypted);
-    ```
-  - ECMAScript Module (ESM)
-    ```javascript
-    import gcrypt from "@barudakrosul/gcrypt";
+const encrypted = gcrypt.encrypt(text, pass);
+const decrypted = gcrypt.decrypt(encrypted, pass);
 
-    const text = "Secret text message!";
-    const pass = "SecretPasswordKey";
+console.log("Encrypted:", encrypted.toString("utf-8"));
+console.log("Decrypted:", decrypted);
+```
 
-    // Encrypted text
-    const encrypted = gcrypt.encrypt(text, pass);
+## Penggunaan CLI
 
-    console.log(encrypted.toString("utf-8"));
-
-    // Decrypted text
-    const decrypted = gcrypt.decrypt(encrypted, pass);
-
-    console.log(decrypted);
-    ```
-- Perintah CLI
-  - Untuk enkripsi:
-    ```shell
-    gcrypt enc -f inputfile.txt -p SecretPassKey
-    ```
-    atau
-    ```shell
-    echo "Text secret message!" | gcrypt enc -p SecretPassKey
-    ```
-  - Untuk dekripsi:
-    ```shell
-    gcrypt dec -f inputfile.txt.enc -p SecretPassKey
-    ```
-    atau
-    ```shell
-    echo "Text encrypted!" | gcrypt dec -p SecretPassKey
-    ```
-
-Perintah atau opsi yang didukung:
+Untuk menggunakan alat ini dari baris perintah, Anda dapat menggunakan perintah `gcrypt` dengan opsi berikut:
 
 <table>
   <tr>
-    <td><p align="center"><b>Perintah atau Opsi</b></p></td>
+    <td><p align="center"><b>Opsi</b></p></td>
     <td><p align="center"><b>Keterangan</b></p></td>
   </tr>
   <tr>
-    <td><code>-h</code>, <code>--help</code>, atau <code>help</code></td>
-    <td>Menampilkan bantuan untuk alat ini.</td>
+    <td><p align="left"><code>-h</code> atau <code>--help</code></p></td>
+    <td><p align="left">Menampilkan bantuan untuk perintah ini.</p></td>
   </tr>
   <tr>
-    <td><code>-V</code> atau <code>--version</code></td>
-    <td>Menampilkan versi alat ini.</td>
+    <td><p align="left"><code>-V</code> atau <code>--version</code></p></td>
+    <td><p align="left">Menampilkan versi saat ini.</p></td>
   </tr>
   <tr>
-    <td><code>-f</code> atau <code>--file</code></td>
-    <td>Masukkan nama file untuk mengenkripsi atau mendekripsi.</td>
+    <td><p align="left"><code>-f</code> atau <code>--file</code></p></td>
+    <td><p align="left">Masukkan nama file untuk mengenkripsi atau mendekripsi.</p></td>
   </tr>
   <tr>
-    <td><code>-o</code> atau <code>--output</code></td>
-    <td>Menyimpan hasil enkripsi atau dekripsi ke nama output file.</td>
+    <td><p align="left"><code>-o</code> atau <code>--output</code></p></td>
+    <td><p align="left">Menyimpan hasil enkripsi atau dekripsi dengan nama lain yang diinginkan.</p></td>
   </tr>
   <tr>
-    <td><code>-v</code> atau <code>--verbose</code></td>
-    <td>Mengaktifkan mode verbose.</td>
+    <td><p align="left"><code>-v</code> atau <code>--verbose</code></p></td>
+    <td><p align="left">Mengaktifkan mode verbose (keterangan teks).</p></td>
   </tr>
   <tr>
-    <td><code>-d</code> atau <code>--decrypt</code></td>
-    <td>Mulai mendekripsi file atau data input.</td>
+    <td><p align="left"><code>-d</code> atau <code>--decrypt</code></p></td>
+    <td><p align="left">Mulai mendekripsi file atau data input standar.</p></td>
   </tr>
   <tr>
-    <td><code>-p</code> atau <code>--passkey</code></td>
-    <td>Masukkan password yang kuat untuk enkripsi atau password yang spesifik untuk dekripsi.</td>
+    <td><p align="left"><code>-p</code> atau <code>--passkey</code></p></td>
+    <td><p align="left">Masukkan password yang kuat untuk enkripsi atau password yang spesifik untuk dekripsi (default: <code>12345678</code>).</p></td>
   </tr>
   <tr>
-    <td><code>-c</code> atau <code>--stdout</code></td>
-    <td>Menampilkan hasil enkripsi atau dekripsi file ke terminal.</td>
+    <td><p align="left"><code>-c</code> atau <code>--stdout</code></p></td>
+    <td><p align="left">Menampilkan hasil enkripsi atau dekripsi file ke terminal.</p></td>
   </tr>
 </table>
+
+Jika tidak ada nama file yang diberikan, `gcrypt` akan mengenkripsi atau mendekripsi dari input standar ke output standar. Anda dapat menggabungkan opsi pendek, seperti `-v -c` yang sama artinya dengan `-vc` atau `-cv`.
+
+Contoh penggunaan CLI:
+
+```shell
+$ gcrypt --file script.js
+```
+
+Contoh jika menggunakan opsi `--passkey`:
+
+```shell
+$ gcrypt --file script.js --passkey secretskey
+```
+
+Contoh enkripsi dari input standar:
+
+```shell
+$ printf "Secret text message!" | gcrypt
+```
 
 ## Berkontribusi
 
@@ -164,8 +165,19 @@ Go-crypt menghargai dukungan dan kontribusi dari individu dan proyek sumber terb
 - [@FajarKim](https://github.com/FajarKim) - Pengembang utama dan pencipta aplikasi.
 - Komunitas sumber terbuka - Untuk kontribusi berharga pada alat dan perpustakaan yang digunakan dalam proyek ini.
 
+## Donasi
+
+Kami sangat menghargai dukungan Anda untuk terus mengembangkan proyek ini. Jika Anda merasa proyek ini bermanfaat, Anda dapat mendukung kami dengan donasi:
+
+[![Ko-fi](https://img.shields.io/badge/Ko%e2%80%91fi-donate-7480ff?logo=ko-fi&logoColor=cyan)](https://ko-fi.com/barudakrosul)
+[![Trakteer](https://custom-icon-badges.demolab.com/badge/Trakteer-donate-red?logo=trakteerid&logoColor=pink)](https://trakteer.id/barudakrosul)
+
+Setiap donasi, berapapun jumlahnya, sangat berarti bagi kami. Terima kasih atas dukungan Anda! ❤️
+
 ## Catatan Perubahan
 
 Terus ikuti perubahan dan pembaruan terbaru Go-crypt dengan mengacu ke [Catatan Perubahan](https://github.com/BarudakRosul/go-crypt/releases).
 
 Terima kasih telah memilih Go-crypt! Kami bertujuan untuk memberikan solusi yang aman dan andal untuk mengenkripsi dan mendekripsi teks di berbagai lingkungan.
+
+[![Stand with Palestine](https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg)](https://techforpalestine.org/learn-more)
