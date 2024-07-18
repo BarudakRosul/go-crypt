@@ -39,71 +39,18 @@ try {
     .action((options) => {
       let { file, output, verbose, decrypt, passkey, stdout } = options;
 
-      if (! passkey) {
+      if (!passkey) {
         passkey = "12345678";
       }
 
-      if (decrypt) {
-        if (file) {
-          const firstTimeout = new Date();
-          const data = fs.readFileSync(file);
-          const decrypted = gcrypt.decrypt(data, passkey);
-          const lastTimeout = new Date();
-          const originalBytes = Buffer.from(data, "utf-8").length;
-          const outputBytes = Buffer.from(decrypted, "utf-8").length;
-          const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
-          let percentDecrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
-
-          if (percentDecrypted < 0) {
-            percentDecrypted += 100;
-          }
-
-          if (verbose) {
-            process.stderr.write("Buffer size    : 8192\n");
-            process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
-            process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
-            process.stderr.write(`Timeout        : ${timeout} sec\n`);
-            process.stderr.write(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%\n`);
-          }
-
-          if (stdout) {
-            process.stdout.write(decrypted);
-            process.exit(0);
-          } else {
-            if (! output) {
-              output = file.replace(".enc", "");
-            }
-            fs.unlinkSync(file);
-            fs.writeFileSync(output, decrypted);
-            console.log(`${__program}: decryption successfully`);
-            console.log(`File saved as '${output}'`);
-            process.exit(0);
-          }
-        } else {
-          let inputText = "";
-          process.stdin.on("readable", () => {
-            const chunk = process.stdin.read();
-            if (chunk !== null) {
-              inputText = chunk;
-            }
-          });
-
-          process.stdin.on("end", () => {
-            if (inputText === null || inputText === "") {
-              process.stderr.write(`${__program}: missing operand\n`);
-              process.stderr.write(`Try '${__program} --help' for more information\n`);
-              process.exit(1);
-            }
-
-            if (String(inputText).search("<Buffer")) {
-              const buffer = Buffer.alloc(0);
-              inputText = Buffer.concat([buffer, inputText]);
-            }
-
+      try {
+        if (decrypt) {
+          if (file) {
             const firstTimeout = new Date();
-            const decrypted = gcrypt.decrypt(inputText, passkey);
+            const data = fs.readFileSync(file);
+            const decrypted = gcrypt.decrypt(data, passkey);
             const lastTimeout = new Date();
-            const originalBytes = Buffer.from(inputText, "utf-8").length;
+            const originalBytes = Buffer.from(data, "utf-8").length;
             const outputBytes = Buffer.from(decrypted, "utf-8").length;
             const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
             let percentDecrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
@@ -120,73 +67,78 @@ try {
               process.stderr.write(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%\n`);
             }
 
-            if (! output) {
+            if (stdout) {
               process.stdout.write(decrypted);
               process.exit(0);
             } else {
+              if (!output) {
+                output = file.replace(".enc", "");
+              }
+              fs.unlinkSync(file);
               fs.writeFileSync(output, decrypted);
               console.log(`${__program}: decryption successfully`);
               console.log(`File saved as '${output}'`);
               process.exit(0);
             }
-          });
-        }
-      } else {
-        if (file) {
-          const firstTimeout = new Date();
-          const data = fs.readFileSync(file, "utf-8");
-          const encrypted = gcrypt.encrypt(data, passkey);
-          const lastTimeout = new Date();
-          const originalBytes = Buffer.from(data, "utf-8").length;
-          const outputBytes = Buffer.from(encrypted, "utf-8").length;
-          const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
-          let percentEncrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
-
-          if (percentEncrypted < 0) {
-            percentEncrypted += 100;
-          }
-
-          if (verbose) {
-            process.stderr.write("Buffer size    : 8192\n");
-            process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
-            process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
-            process.stderr.write(`Timeout        : ${timeout} sec\n`);
-            process.stderr.write(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%\n`);
-          }
-
-          if (stdout) {
-            process.stdout.write(encrypted);
-            process.exit(0);
           } else {
-            if (! output) {
-              output = file + ".enc";
-            }
-            fs.unlinkSync(file);
-            fs.writeFileSync(output, encrypted);
-            console.log(`${__program}: encryption successfully`);
-            console.log(`File saved as '${output}'`);
-            process.exit(0);
+            let inputText = "";
+            process.stdin.on("readable", () => {
+              const chunk = process.stdin.read();
+              if (chunk !== null) {
+                inputText = chunk;
+              }
+            });
+
+            process.stdin.on("end", () => {
+              if (inputText === null || inputText === "") {
+                process.stderr.write(`${__program}: missing operand\n`);
+                process.stderr.write(`Try '${__program} --help' for more information\n`);
+                process.exit(1);
+              }
+
+              if (String(inputText).search("<Buffer")) {
+                const buffer = Buffer.alloc(0);
+                inputText = Buffer.concat([buffer, inputText]);
+              }
+
+              const firstTimeout = new Date();
+              const decrypted = gcrypt.decrypt(inputText, passkey);
+              const lastTimeout = new Date();
+              const originalBytes = Buffer.from(inputText, "utf-8").length;
+              const outputBytes = Buffer.from(decrypted, "utf-8").length;
+              const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
+              let percentDecrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
+
+              if (percentDecrypted < 0) {
+                percentDecrypted += 100;
+              }
+
+              if (verbose) {
+                process.stderr.write("Buffer size    : 8192\n");
+                process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
+                process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
+                process.stderr.write(`Timeout        : ${timeout} sec\n`);
+                process.stderr.write(`Decrypted      : ${millify.millify(percentDecrypted, { precision: 2})}%\n`);
+              }
+
+              if (!output) {
+                process.stdout.write(decrypted);
+                process.exit(0);
+              } else {
+                fs.writeFileSync(output, decrypted);
+                console.log(`${__program}: decryption successfully`);
+                console.log(`File saved as '${output}'`);
+                process.exit(0);
+              }
+            });
           }
         } else {
-          let inputText = "";
-          process.stdin.on("readable", () => {
-            const chunk = process.stdin.read();
-            if (chunk !== null) {
-              inputText = chunk;
-            }
-          });
-
-          process.stdin.on("end", () => {
-            if (inputText === null || inputText === "") {
-              process.stderr.write(`${__program}: missing operand`);
-              process.stderr.write(`Try '${__program} --help' for more information`);
-              process.exit(1);
-            }
-
+          if (file) {
             const firstTimeout = new Date();
-            const encrypted = gcrypt.encrypt(inputText, passkey);
+            const data = fs.readFileSync(file, "utf-8");
+            const encrypted = gcrypt.encrypt(data, passkey);
             const lastTimeout = new Date();
-            const originalBytes = Buffer.from(inputText, "utf-8").length;
+            const originalBytes = Buffer.from(data, "utf-8").length;
             const outputBytes = Buffer.from(encrypted, "utf-8").length;
             const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
             let percentEncrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
@@ -203,17 +155,71 @@ try {
               process.stderr.write(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%\n`);
             }
 
-            if (! output) {
+            if (stdout) {
               process.stdout.write(encrypted);
               process.exit(0);
             } else {
+              if (!output) {
+                output = file + ".enc";
+              }
+              fs.unlinkSync(file);
               fs.writeFileSync(output, encrypted);
               console.log(`${__program}: encryption successfully`);
               console.log(`File saved as '${output}'`);
               process.exit(0);
             }
-          });
+          } else {
+            let inputText = "";
+            process.stdin.on("readable", () => {
+              const chunk = process.stdin.read();
+              if (chunk !== null) {
+                inputText = chunk;
+              }
+            });
+
+            process.stdin.on("end", () => {
+              if (inputText === null || inputText === "") {
+                process.stderr.write(`${__program}: missing operand`);
+                process.stderr.write(`Try '${__program} --help' for more information`);
+                process.exit(1);
+              }
+
+              const firstTimeout = new Date();
+              const encrypted = gcrypt.encrypt(inputText, passkey);
+              const lastTimeout = new Date();
+              const originalBytes = Buffer.from(inputText, "utf-8").length;
+              const outputBytes = Buffer.from(encrypted, "utf-8").length;
+              const timeout = millify.millify((lastTimeout - firstTimeout) / 1000, { precision: 2 });
+              let percentEncrypted = ((originalBytes - outputBytes) / (originalBytes + outputBytes)) * 100;
+
+              if (percentEncrypted < 0) {
+                percentEncrypted += 100;
+              }
+
+              if (verbose) {
+                process.stderr.write("Buffer size    : 8192\n");
+                process.stderr.write(`Original bytes : ${originalBytes} bytes\n`);
+                process.stderr.write(`Output bytes   : ${outputBytes} bytes\n`);
+                process.stderr.write(`Timeout        : ${timeout} sec\n`);
+                process.stderr.write(`Encrypted      : ${millify.millify(percentEncrypted, { precision: 2})}%\n`);
+              }
+
+              if (!output) {
+                process.stdout.write(encrypted);
+                process.exit(0);
+              } else {
+                fs.writeFileSync(output, encrypted);
+                console.log(`${__program}: encryption successfully`);
+                console.log(`File saved as '${output}'`);
+                process.exit(0);
+              }
+            });
+          }
         }
+      } catch(error) {
+        process.stderr.write(`${__program}: ${error.message}\n`);
+        const errorCode = typeof error.code === "number" ? error.code : 1;
+        process.exit(errorCode);
       }
     })
     .on("--help", () => {
