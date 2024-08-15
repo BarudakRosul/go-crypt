@@ -36,13 +36,13 @@
   },
   "dependencies": {
     "@barudakrosul/internet-available": "^0.1.4",
-    "axios": "^1.7.2",
+    "axios": "^1.7.4",
     "commander": "^12.1.0",
     "millify": "^6.1.0",
     "semver": "^7.6.3"
   },
   "devDependencies": {
     "assert": "^2.1.0",
-    "mocha": "^10.6.0"
+    "mocha": "^10.7.3"
   }
 }
