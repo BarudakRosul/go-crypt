@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Go-crypt</h1>
-  <p><a href="/docs/README-EN.md">English</a></p>
+  <p><a href="/docs/README.en.md">English</a></p>
   <p><a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml">Laporkan Bug</a> · <a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.yml">Ajukan Fitur</a></p>
   <p>
     <a href="https://github.com/BarudakRosul/go-crypt/actions/workflows/test.yml"><img src="https://github.com/BarudakRosul/go-crypt/actions/workflows/test.yml/badge.svg" alt="Testing"/></a>
