@@ -68,11 +68,6 @@ const gcrypt = require("@barudakrosul/gcrypt");
 import gcrypt from "@barudakrosul/gcrypt";
 ```
 
-**3\. TypeScript**
-```typescript
-import gcrypt from "@barudakrosul/gcrypt";
-```
-
 Contoh penggunaan:
 
 ```javascript
