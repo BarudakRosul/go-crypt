@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="../image/logo.svg" alt="Go-crypt Logo" width="260"/>
   <h1>Go-crypt</h1>
   <p><a href="/docs/README-EN.md">English</a></p>
   <p><a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml">Report Bug</a> · <a href="https://github.com/BarudakRosul/go-crypt/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.yml">Request Feature</a></p>
