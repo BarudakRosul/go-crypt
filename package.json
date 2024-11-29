@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@barudakrosul/internet-available": "^0.1.4",
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "commander": "^12.1.0",
     "millify": "^6.1.0",
     "semver": "^7.6.3"
